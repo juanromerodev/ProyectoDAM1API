@@ -1,6 +1,16 @@
-﻿namespace ProyectoDAM1.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoDAM1.Repositories;
+
+namespace ProyectoDAM1.Controllers
 {
-    public class EmpleadoController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class EmpleadoController: ControllerBase
     {
+        private readonly IEmpleadoRepository empleadoRepository;
+        public EmpleadoController(IEmpleadoRepository empleadoRepository)
+        {
+            this.empleadoRepository = empleadoRepository;
+        }
     }
 }

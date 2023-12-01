@@ -1,6 +1,16 @@
-﻿namespace ProyectoDAM1.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoDAM1.Repositories;
+
+namespace ProyectoDAM1.Controllers
 {
-    public class BebidaController
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BebidaController: ControllerBase
     {
+        private readonly IBebidaRepository bebidaRepository;
+        public BebidaController(IBebidaRepository bebidaRepository)
+        {
+            this.bebidaRepository = bebidaRepository;
+        }
     }
 }
