@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using ProyectoDAM1.Exceptions;
+using ProyectoDAM1.Models;
+using ProyectoDAM1.Repositories;
+using ProyectoDAM1.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +13,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Configurando el DBContext para usar el SQL Server
+var connectionString = builder.Configuration.GetConnectionString("RestobarDB");
+builder.Services.AddDbContext<RestobarCandelabroDBContext>(options => options.UseSqlServer(connectionString));
+
+//Configurando la inyeccion de dependencia para ICustomerRepository
+builder.Services.AddScoped<IMesaRepository, MesaService>();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -17,6 +31,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//Invocamos el GlobalExceptionHandler como middleware
+app.UseMiddleware(typeof(GlobalExceptionHandler));
 
 app.UseAuthorization();
 
