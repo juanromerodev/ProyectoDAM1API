@@ -20,6 +20,7 @@ builder.Services.AddDbContext<RestobarCandelabroDBContext>(options => options.Us
 //Configurando la inyeccion de dependencia para ICustomerRepository
 builder.Services.AddScoped<IMesaRepository, MesaService>();
 builder.Services.AddScoped<IPlatoRepository, PlatoService>();
+builder.Services.AddScoped<IBebidaRepository, BebidaService>();
 
 var app = builder.Build();
 

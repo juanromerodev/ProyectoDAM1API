@@ -1,4 +1,5 @@
-﻿using ProyectoDAM1.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ProyectoDAM1.Models;
 using ProyectoDAM1.Repositories;
 
 namespace ProyectoDAM1.Services
@@ -18,17 +19,29 @@ namespace ProyectoDAM1.Services
 
         public async Task<IEnumerable<Bebidum>> GetBebidas()
         {
-            throw new NotImplementedException();
+            return await dbContext.Bebida.ToListAsync();
         }
 
         public async Task<IEnumerable<Bebidum>> GetBebidasXCategoria(int idCategory)
         {
-            throw new NotImplementedException();
+            return await dbContext.Bebida.Where(p => p.CategoriaBebidaId == idCategory).ToListAsync();
         }
 
-        public async Task<Bebidum> UpdateBebida(int id, Plato mesa)
+        public async Task<Bebidum> UpdateBebida(int id, Bebidum bebida)
         {
-            throw new NotImplementedException();
+            var existingBebida = await dbContext.Bebida.FindAsync(id);
+            if (existingBebida != null)
+            {   
+                existingBebida.DetalleBebida = bebida.DetalleBebida;
+                existingBebida.DescripcionBebida = bebida.DescripcionBebida;
+                existingBebida.ImagenUrl = bebida.ImagenUrl;
+                existingBebida.IdProducto = bebida.IdProducto;
+                existingBebida.CategoriaBebidaId = bebida.CategoriaBebidaId;
+
+                await dbContext.SaveChangesAsync();
+            }
+            return existingBebida;
         }
+
     }
 }
