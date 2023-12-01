@@ -5,22 +5,28 @@ namespace ProyectoDAM1.Services
 {
     public class BebidaService : IBebidaRepository
     {
-        public Task<Bebidum> GetBebidaById(int id)
+        private readonly RestobarCandelabroDBContext dbContext;
+        public BebidaService(RestobarCandelabroDBContext dbContext)
+        {
+            //por inyeccion de dependencia se instancia la clase(crear el objeto)
+            this.dbContext = dbContext;
+        }
+        public async Task<Bebidum> GetBebidaById(int id)
+        {
+            return await dbContext.Bebida.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Bebidum>> GetBebidas()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Bebidum>> GetBebidas()
+        public async Task<IEnumerable<Bebidum>> GetBebidasXCategoria(int idCategory)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Bebidum>> GetBebidasXCategoria(int idCategory)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Bebidum> UpdateBebida(int id, Plato mesa)
+        public async Task<Bebidum> UpdateBebida(int id, Plato mesa)
         {
             throw new NotImplementedException();
         }
